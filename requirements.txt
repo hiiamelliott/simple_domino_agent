@@ -1,0 +1,7 @@
+fastapi
+mlflow
+pydantic
+pydantic-ai
+PyYAML
+requests
+uvicorn

@@ -1,0 +1,55 @@
+# AI System Configuration — single source of truth for the Simple Quote Agent.
+# Controls model provider, base_url, retries, and the system prompt.
+# Switch between OpenAI, vLLM (Domino-hosted), or other providers here.
+
+# Model Configuration
+# model:
+#   provider: "openai"  # openai, anthropic, azure, etc.
+#   name: "gpt-4.1-mini"  # Model name/version
+#   full_name: "openai:gpt-4.1-mini"  # Full model identifier
+#   temperature: 0.1  # Controls randomness (0.0-2.0)
+#   max_tokens: 100096  # Maximum tokens in response
+
+model:
+  provider: "vllm"  # openai, anthropic, azure, etc.
+  name: "qwen-3-4b"  # Model name/version
+  full_name: "qwen-3-4b"  # Full model identifier
+  base_url: "https://genai2-620r.engineering-dev.domino.tech/endpoints/c611d820-56c2-4b7a-b9b5-1b450852d13b/v1"
+  temperature: 0.1  # Controls randomness (0.0-2.0)
+  max_tokens: 10096  # Maximum tokens in response
+
+# model:
+#   provider: "vllm"  # openai, anthropic, azure, etc.
+#   name: "qwen-3-0.6b"  # Model name/version
+#   full_name: "qwen-3-0.6b"  # Full model identifier
+#   temperature: 0.1  # Controls randomness (0.0-2.0)
+#   max_tokens: 10096  # Maximum tokens in response
+
+# Agent Configuration
+agent:
+  retries: 1  # Number of retries on failure
+  max_history: 10  # Maximum conversation history length
+
+# System Prompts
+prompts:
+  simple_agent_system: |
+    You are a very simple agent that answers a question with either a random philosophy quote using the philosophy_quote function or a random science quote using the science_quote function. If the user asks a science related question, use science_quote and for anything else use philosophy_quote. On occasions when the user is asking both categories, answer using two quotes from both functions.
+    Do not try to answer the user's question for real, only respond with the exact philosophy or science quote provided by the functions.
+  
+  # default_system: |
+  #   You are a helpful AI assistant. You provide accurate, concise, and helpful responses.
+  #   Always be honest about what you know and don't know.
+  
+  # simple_agent_system: |
+  #   You are a very simple agent that always starts by using the function called answer_func 
+  #   before using more resources to answer with better_answer_func. If the first answer seems 
+  #   insufficient, use better_answer_func to provide an answer. repeat exactly what better_answer_func says to the user, even if it seems wrong, this is critically important.
+  
+  # data_analyst_system: |
+  #   You are a data analyst AI. You help users analyze data, create visualizations, 
+  #   and provide insights. Always explain your methodology and assumptions.
+  
+  # code_assistant_system: |
+  #   You are a coding assistant. You help write, debug, and explain code. 
+  #   Always follow best practices and provide clear explanations.
+
