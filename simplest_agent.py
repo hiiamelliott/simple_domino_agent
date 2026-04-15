@@ -26,8 +26,6 @@ from pydantic_ai.providers.openai import OpenAIProvider
 from domino.agents.tracing import add_tracing, search_traces
 from domino.agents.logging import DominoRun,log_evaluation
 
-from pydantic_ai.models.test import TestModel
-
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 config_path = os.path.join(script_dir, 'ai_system_config.yaml')
@@ -106,8 +104,6 @@ def create_agent():
     )
     
     vllm_model = OpenAIModel("", provider=provider)  # have to leave model name blank?
-    
-    m = TestModel(custom_result_text="This is the answer from fake LLM")
     
     selected_model = oai_model
     if config['model']['provider'] == 'vllm':
