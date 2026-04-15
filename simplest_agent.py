@@ -107,7 +107,7 @@ def create_agent():
     
     vllm_model = OpenAIModel("", provider=provider)  # have to leave model name blank?
     
-    m = TestModel(custom_output_text="This is the answer from fake LLM")
+    m = TestModel(custom_result_text="This is the answer from fake LLM")
     
     selected_model = oai_model
     if config['model']['provider'] == 'vllm':
