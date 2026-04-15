@@ -32,6 +32,7 @@ from domino.agents.logging import DominoRun
 # We use create_agent() to get a fresh agent with a new API key before each request
 # since the VLLM_API_KEY expires every 5 minutes
 from simplest_agent import create_agent
+from pydantic_ai.models.test import TestModel
 
 # Get the directory where this script is located
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -68,7 +69,9 @@ async def ask_agent(question):
     # Create a fresh agent with a new API key for each request
     # This handles the 5-minute VLLM_API_KEY expiration
     agent = create_agent()
-    result = await agent.run(question)
+    m = TestModel(custom_result_text="This is the answer from fake LLM")
+    with agent.override(model=m):
+        result = await agent.run(question)
     return result
 
 @app.post("/chat")
@@ -85,7 +88,7 @@ async def chat(request: ChatMessage) -> ChatResponse:
         conv_id = request.conversation_id or str(id(request))
         
         return ChatResponse(
-            response=result.output,
+            response=result.data,
             conversation_id=conv_id
         )
     except Exception as e:
