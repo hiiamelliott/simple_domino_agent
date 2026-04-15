@@ -109,10 +109,10 @@ def process_single_question(data_point: Dict[str, Any]) -> Dict[str, Any]:
         result = simplest_agent.run_sync(data_point['question'])
     
     print("#### AGENT ANSWER ####")
-    print(result.output)
+    print(result.data)
     print("#### AGENT ANSWER ####")
     
-    output = {"answer": result.output}
+    output = {"answer": result.data}
     return output
 
     
