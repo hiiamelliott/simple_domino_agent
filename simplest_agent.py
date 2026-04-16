@@ -96,18 +96,14 @@ def create_agent():
     Factory function to create a fresh agent with a new API key.
     Call this before each chat request since the VLLM_API_KEY expires every 5 minutes.
     """
-    VLLM_API_KEY = requests.get("http://localhost:8899/access-token").text
-    
-    provider = OpenAIProvider(
-        base_url=BASE_URL,
-        api_key=VLLM_API_KEY,
-    )
-    
-    vllm_model = OpenAIModel("", provider=provider)  # have to leave model name blank?
-    
     selected_model = oai_model
     if config['model']['provider'] == 'vllm':
-        selected_model = vllm_model
+        VLLM_API_KEY = requests.get("http://localhost:8899/access-token").text
+        provider = OpenAIProvider(
+            base_url=BASE_URL,
+            api_key=VLLM_API_KEY,
+        )
+        selected_model = OpenAIModel("", provider=provider)  # have to leave model name blank?
 
     the_agent = Agent(
         selected_model,

@@ -17,7 +17,6 @@ from domino.agents.tracing import add_tracing, search_traces
 from domino.agents.logging import DominoRun,log_evaluation
 
 from pydantic_ai import Agent, RunContext
-from pydantic_ai.models.test import TestModel
 from pydantic import BaseModel
 from typing import Dict, Any, Annotated
 import csv
@@ -104,9 +103,7 @@ def process_single_question(data_point: Dict[str, Any]) -> Dict[str, Any]:
     print(f"{'='*60}")
     
     simplest_agent = create_agent()
-    m = TestModel(custom_result_text="This is the answer from fake LLM")
-    with simplest_agent.override(model=m):
-        result = simplest_agent.run_sync(data_point['question'])
+    result = simplest_agent.run_sync(data_point['question'])
     
     print("#### AGENT ANSWER ####")
     print(result.data)
